@@ -1,41 +1,81 @@
 <div class="container">
   <h3>Gerenciamento de Clientes</h3>
 
-  <!-- Seção de Busca -->
+  <!-- Busca -->
   <div style="margin-bottom: 30px; background: #2d2d2d; padding: 20px; border-radius: 8px;">
     <label style="margin-right: 10px;">Buscar por ID:</label>
-    
-    <input type="number" [(ngModel)]="searchId" placeholder="Digite o ID..." (keyup.enter)="onSearch()"
+    <input type="number" [(ngModel)]="searchId" (keyup.enter)="onSearch()" placeholder="Digite o ID..." 
            style="padding: 8px; border-radius: 4px; border: 1px solid #444; background: #1e1e1e; color: white;">
-          
     <button (click)="onSearch()" 
-            style="margin-left: 10px; padding: 8px 15px; background: #4db6ac; border: none; border-radius: 4px; cursor: pointer; color: #1e1e1e; font-weight: bold;">
-      Buscar
+            style="margin-left: 10px; padding: 8px 15px; background: #4db6ac; border: none; border-radius: 4px; cursor: pointer; 
+            color: #1e1e1e; font-weight: bold;">
+      BUSCAR
     </button>
     <button *ngIf="foundClient" (click)="clearSearch()" 
-            style="margin-left: 10px; padding: 8px 15px; background: #ff5252; border: none; border-radius: 4px; cursor: pointer; color: white;">
-      Limpar
+            style="margin-left: 10px; padding: 8px 15px; background: #ff5252; border: none; border-radius: 4px; cursor: pointer; 
+            color: white;">
+      LIMPAR
     </button>
   </div>
 
-  <!-- Exibição do Cliente Encontrado (Card) -->
-  <div *ngIf="foundClient" style="margin-bottom: 30px; border: 2px solid #4db6ac; padding: 20px; border-radius: 8px; background: #333;">
-    <h4 style="color: #4db6ac; margin-top: 0;">Resultado da Busca:</h4>
-    <p><strong>Nome:</strong> {{ foundClient.name }}</p>
-    <p><strong>CPF:</strong> {{ foundClient.cpf }}</p>
-    <p><strong>Renda:</strong> {{ foundClient.income | currency:'BRL' }}</p>
+  <!-- Card de Resultado da Busca -->
+  <div *ngIf="foundClient" style="margin-bottom: 30px; border: 2px solid #4db6ac; padding: 20px; border-radius: 8px; 
+  background: #333; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+    <div>
+      <h4 style="color: #4db6ac; margin-top: 0;">Resultado da Busca:</h4>
+      <p style="margin: 5px 0; font-size: 16px;">
+        <strong>ID:</strong> {{ foundClient.id }} | 
+        <strong>Nome:</strong> {{ foundClient.name }} | 
+        <strong>CPF:</strong> {{ foundClient.cpf }} | 
+        <strong>Renda:</strong> <span style="color: #81c784;">{{ foundClient.income | currency:'BRL' }}</span>
+      </p>
+    </div>
+    
+    <div style="display: flex; gap: 10px;">
+      <!-- Editar da Busca -->
+      <button (click)="onEdit(foundClient)" 
+              style="padding: 10px 15px; background: #4db6ac; border: none; border-radius: 4px; cursor: pointer; color: #1e1e1e;
+               font-weight: bold;">
+        EDITAR
+      </button>
+      
+      <!-- Excluir da Busca -->
+      <button (click)="onDelete(foundClient.id!)" 
+              style="padding: 10px 15px; background: #ff5252; border: none; border-radius: 4px; cursor: pointer; color: white;
+               font-weight: bold;">
+        EXCLUIR
+      </button>
+    </div>
   </div>
 
-  <!-- Tabela Geral (Sempre visível ou você pode usar um else) -->
+  <!-- Formulário de Edição -->
+  <div *ngIf="isEditing && clientToEdit" style="background: #333; padding: 20px; border-radius: 8px; margin-bottom: 30px; 
+  border: 1px solid #4db6ac;">
+    <h4 style="color: #4db6ac; margin-top: 0;">Editando: {{ clientToEdit.name }}</h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <input [(ngModel)]="clientToEdit.name" placeholder="Nome" style="padding: 8px; background: #1e1e1e; color: white; border: 
+      1px solid #444;">
+      <input [(ngModel)]="clientToEdit.income" type="number" placeholder="Renda" style="padding: 8px; background: #1e1e1e; color: 
+      white; border: 1px solid #444;">
+    </div>
+    <div style="margin-top: 15px;">
+      <button (click)="onSaveUpdate()" style="padding: 8px 15px; background: #4db6ac; border: none; cursor: pointer; font-weight:
+       bold; color: #1e1e1e;">SALVAR</button>
+      <button (click)="cancelEdit()" style="margin-left: 10px; padding: 8px 15px; background: #666; border: none; color: white;
+       cursor: pointer;">CANCELAR</button>
+    </div>
+  </div>
+
+  <!-- Tabela Única -->
   <div class="table-container">
-    <!-- ... código da sua tabela que já funciona ... -->
     <table>
       <thead>
         <tr>
           <th>ID</th>
-          <th>Nome</th>
+          <th>NOME</th>
           <th>CPF</th>
-          <th>Renda</th>
+          <th>RENDA</th>
+          <th>AÇÕES</th>
         </tr>
       </thead>
       <tbody>
@@ -44,6 +84,14 @@
           <td>{{ c.name }}</td>
           <td>{{ c.cpf }}</td>
           <td class="income-col">{{ c.income | currency:'BRL' }}</td>
+          <td>
+            <button (click)="onEdit(c)" style="background: none; border: none; color: #4db6ac; cursor: pointer; margin-right: 10px; font-weight: bold;">
+              EDITAR
+            </button>
+            <button (click)="onDelete(c.id!)" style="background: none; border: none; color: #ff5252; cursor: pointer; font-weight: bold;">
+              EXCLUIR
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
