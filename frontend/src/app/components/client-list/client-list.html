@@ -1,1 +1,24 @@
-<p>client-list works!</p>
+<div class="container">
+  <h3>Lista de Clientes</h3>
+  
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Renda</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of clients">
+          <td>{{ c.id }}</td>
+          <td>{{ c.name }}</td>
+          <td>{{ c.cpf }}</td>
+          <td class="income-col">{{ c.income | currency:'BRL' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
