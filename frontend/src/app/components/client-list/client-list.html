@@ -1,7 +1,34 @@
 <div class="container">
-  <h3>Lista de Clientes</h3>
-  
+  <h3>Gerenciamento de Clientes</h3>
+
+  <!-- Seção de Busca -->
+  <div style="margin-bottom: 30px; background: #2d2d2d; padding: 20px; border-radius: 8px;">
+    <label style="margin-right: 10px;">Buscar por ID:</label>
+    
+    <input type="number" [(ngModel)]="searchId" placeholder="Digite o ID..." (keyup.enter)="onSearch()"
+           style="padding: 8px; border-radius: 4px; border: 1px solid #444; background: #1e1e1e; color: white;">
+          
+    <button (click)="onSearch()" 
+            style="margin-left: 10px; padding: 8px 15px; background: #4db6ac; border: none; border-radius: 4px; cursor: pointer; color: #1e1e1e; font-weight: bold;">
+      Buscar
+    </button>
+    <button *ngIf="foundClient" (click)="clearSearch()" 
+            style="margin-left: 10px; padding: 8px 15px; background: #ff5252; border: none; border-radius: 4px; cursor: pointer; color: white;">
+      Limpar
+    </button>
+  </div>
+
+  <!-- Exibição do Cliente Encontrado (Card) -->
+  <div *ngIf="foundClient" style="margin-bottom: 30px; border: 2px solid #4db6ac; padding: 20px; border-radius: 8px; background: #333;">
+    <h4 style="color: #4db6ac; margin-top: 0;">Resultado da Busca:</h4>
+    <p><strong>Nome:</strong> {{ foundClient.name }}</p>
+    <p><strong>CPF:</strong> {{ foundClient.cpf }}</p>
+    <p><strong>Renda:</strong> {{ foundClient.income | currency:'BRL' }}</p>
+  </div>
+
+  <!-- Tabela Geral (Sempre visível ou você pode usar um else) -->
   <div class="table-container">
+    <!-- ... código da sua tabela que já funciona ... -->
     <table>
       <thead>
         <tr>
