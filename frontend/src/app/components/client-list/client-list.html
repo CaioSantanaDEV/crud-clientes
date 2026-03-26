@@ -31,13 +31,15 @@
     </button>
   </div>
 
-  <!-- Formulário de Novo Cliente (Aparece abaixo da barra ao clicar no botão) -->
+  <!-- Formulário de Novo Cliente -->
   <div *ngIf="isCreating" class="edit-section" style="padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 2px solid #4db6ac; background: var(--card-bg);">
     <h4 style="color: #4db6ac; margin-top: 0;">Cadastrar Novo Cliente</h4>
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
       <input [(ngModel)]="newClient.name" placeholder="Nome Completo" style="padding: 10px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
       <input [(ngModel)]="newClient.cpf" placeholder="CPF (apenas números)" style="padding: 10px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
       <input [(ngModel)]="newClient.income" type="number" placeholder="Renda" style="padding: 10px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
+      <input [(ngModel)]="newClient.birthDate" type="date" title="Data de Nascimento" style="padding: 10px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
+      <input [(ngModel)]="newClient.children" type="number" placeholder="Nº de Filhos" style="padding: 10px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
     </div>
     <button (click)="onSaveNew()" style="margin-top: 15px; padding: 10px 25px; background: #4db6ac; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; color: #1e1e1e;">
       SALVAR NOVO CLIENTE
@@ -52,7 +54,9 @@
         <strong>ID:</strong> {{ foundClient.id }} | 
         <strong>Nome:</strong> {{ foundClient.name }} | 
         <strong>CPF:</strong> {{ foundClient.cpf }} | 
-        <strong>Renda:</strong> <span style="color: #81c784;">{{ foundClient.income | currency:'BRL' }}</span>
+        <strong>Renda:</strong> <span style="color: #81c784;">{{ foundClient.income | currency:'BRL' }}</span> |
+        <strong>Nascimento:</strong> {{ foundClient.birthDate | date:'dd/MM/yyyy' }} |
+        <strong>Filhos:</strong> {{ foundClient.children }}
       </p>
     </div>
     
@@ -71,13 +75,15 @@
   <!-- Formulário de Edição -->
   <div *ngIf="isEditing && clientToEdit" class="edit-section" style="padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #4db6ac; background: var(--card-bg);">
     <h4 style="color: #4db6ac; margin-top: 0;">Editando: {{ clientToEdit.name }}</h4>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-      <input [(ngModel)]="clientToEdit.name" placeholder="Nome" style="padding: 8px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
-      <input [(ngModel)]="clientToEdit.income" type="number" placeholder="Renda" style="padding: 8px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+      <input [(ngModel)]="clientToEdit.name" placeholder="Nome" style="padding: 10px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
+      <input [(ngModel)]="clientToEdit.income" type="number" placeholder="Renda" style="padding: 10px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
+      <input [(ngModel)]="clientToEdit.birthDate" type="date" style="padding: 10px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
+      <input [(ngModel)]="clientToEdit.children" type="number" placeholder="Filhos" style="padding: 10px; background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--table-border);">
     </div>
     <div style="margin-top: 15px;">
-      <button (click)="onSaveUpdate()" style="padding: 8px 15px; background: #4db6ac; border: none; cursor: pointer; font-weight: bold; color: #1e1e1e;">SALVAR</button>
-      <button (click)="cancelEdit()" style="margin-left: 10px; padding: 8px 15px; background: #666; border: none; color: white; cursor: pointer;">CANCELAR</button>
+      <button (click)="onSaveUpdate()" style="padding: 10px 25px; background: #4db6ac; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; color: #1e1e1e;">SALVAR</button>
+      <button (click)="cancelEdit()" style="margin-left: 10px; padding: 10px 25px; background: #666; border: none; color: white; cursor: pointer; border-radius: 4px;">CANCELAR</button>
     </div>
   </div>
 
@@ -90,6 +96,8 @@
           <th>NOME</th>
           <th>CPF</th>
           <th>RENDA</th>
+          <th>NASCIMENTO</th>
+          <th>FILHOS</th>
           <th>AÇÕES</th>
         </tr>
       </thead>
@@ -99,6 +107,8 @@
           <td>{{ c.name }}</td>
           <td>{{ c.cpf }}</td>
           <td class="income-col">{{ c.income | currency:'BRL' }}</td>
+          <td>{{ c.birthDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ c.children }}</td>
           <td>
             <button (click)="onEdit(c)" style="background: none; border: none; color: #4db6ac; cursor: pointer; margin-right: 10px; font-weight: bold;">
               EDITAR

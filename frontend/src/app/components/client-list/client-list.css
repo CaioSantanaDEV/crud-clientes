@@ -61,7 +61,7 @@ input {
   border: 1px solid var(--table-border) !important;
 }
 
-/* Ajuste nos cards de busca e edição */
+
 .search-section, .edit-section, .result-card {
   background-color: var(--card-bg) !important;
   color: var(--text-primary);

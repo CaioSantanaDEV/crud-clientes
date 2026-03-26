@@ -21,7 +21,7 @@ export class ClientList implements OnInit {
   isDarkMode = true;
 
   isCreating = false;
-  newClient: Client = { name: '', cpf: '', income: 0 };
+  newClient: Client = { name: '', cpf: '', income: 0, birthDate: '', children: 0 };
 
   constructor(private service: ClientService, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: Document) { }
 
@@ -73,10 +73,10 @@ export class ClientList implements OnInit {
   }
 
   toggleCreate(): void {
-    this.isCreating = !this.isCreating;
-    this.newClient = { name: '', cpf: '', income: 0 };
-    this.cdr.detectChanges();
-  }
+  this.isCreating = !this.isCreating;
+  this.newClient = { name: '', cpf: '', income: 0, birthDate: '', children: 0 }; 
+  this.cdr.detectChanges();
+}
 
   onDelete(id: number): void {
     if (confirm('Tem certeza que deseja excluir este cliente?')) {
