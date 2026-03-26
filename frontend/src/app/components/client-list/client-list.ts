@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ClientService } from '../../services/client'; // Verifique se o nome do arquivo é client.service
+import { ClientService } from '../../services/client';
 import { Client } from '../../models/client';
 import { CustomError } from '../../models/custom-error';
 
@@ -18,11 +18,23 @@ export class ClientList implements OnInit {
   foundClient: Client | null = null;
   isEditing = false;
   clientToEdit: Client | null = null;
+  isDarkMode = true;
 
-  constructor(private service: ClientService, private cdr: ChangeDetectorRef) { }
+  constructor(private service: ClientService, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit(): void {
     this.loadAll();
+    this.applyTheme();
+  }
+
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    this.applyTheme();
+  }
+
+  private applyTheme(): void {
+    const theme = this.isDarkMode ? 'dark' : 'light';
+    this.document.body.setAttribute('data-theme', theme);
   }
 
   loadAll(): void {

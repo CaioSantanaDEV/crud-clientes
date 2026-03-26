@@ -1,7 +1,32 @@
+
+:root {
+
+  --bg-color: #f5f7fa;
+  --container-bg: #ffffff;
+  --text-primary: #2d3436;
+  --text-secondary: #636e72;
+  --table-header: #dfe6e9;
+  --table-border: #dcdde1;
+  --input-bg: #ffffff;
+  --card-bg: #f1f2f6;
+}
+
+[data-theme='dark'] {
+  --bg-color: #1e1e1e;
+  --container-bg: #1e1e1e;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --table-header: #383838;
+  --table-border: #444;
+  --input-bg: #2d2d2d;
+  --card-bg: #333;
+}
+
 body {
   margin: 0;
   padding: 0;
-  background-color: #1e1e1e; 
-  color: #6f6f6f;           
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
