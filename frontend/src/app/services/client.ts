@@ -19,6 +19,10 @@ export class ClientService {
     return this.http.get<Client>(`${this.API}/${id}`);
   }
 
+insert(client: Client): Observable<Client> {
+    return this.http.post<Client>(this.API, client);
+  }
+
   update(id: number, client: Client): Observable<Client> {
     return this.http.put<Client>(`${this.API}/${id}`, client);
   }
@@ -26,4 +30,6 @@ export class ClientService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.API}/${id}`);
   }
+
+  
 }

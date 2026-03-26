@@ -20,6 +20,9 @@ export class ClientList implements OnInit {
   clientToEdit: Client | null = null;
   isDarkMode = true;
 
+  isCreating = false;
+  newClient: Client = { name: '', cpf: '', income: 0 };
+
   constructor(private service: ClientService, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit(): void {
@@ -67,6 +70,12 @@ export class ClientList implements OnInit {
   clearSearch(): void {
     this.foundClient = null;
     this.searchId = null;
+  }
+
+  toggleCreate(): void {
+    this.isCreating = !this.isCreating;
+    this.newClient = { name: '', cpf: '', income: 0 };
+    this.cdr.detectChanges();
   }
 
   onDelete(id: number): void {
@@ -121,6 +130,27 @@ export class ClientList implements OnInit {
         }
       });
     }
+  }
+
+  onSaveNew(): void {
+    this.service.insert(this.newClient).subscribe({
+      next: () => {
+        this.isCreating = false;
+        this.loadAll();
+        alert('Cliente cadastrado com sucesso!');
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        const errorResponse: CustomError = err.error;
+        if (errorResponse.status === 422) {
+          let msg = 'Erro ao cadastrar:\n';
+          errorResponse.Message.forEach(e => msg += `- ${e.fieldName}: ${e.message}\n`);
+          alert(msg);
+        } else {
+          alert(`Erro: ${errorResponse.error || 'Falha ao cadastrar'}`);
+        }
+      }
+    });
   }
 
   cancelEdit(): void {

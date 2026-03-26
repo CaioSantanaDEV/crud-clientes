@@ -3,6 +3,6 @@ export interface Client {
   name: string;
   cpf: string;
   income: number;
-  birthDate: string;
-  children: number;
+  birthDate?: string;
+  children?: number;
 }
