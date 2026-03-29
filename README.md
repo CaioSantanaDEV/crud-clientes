@@ -27,14 +27,6 @@ Aplicação para gerenciamento de clientes, desenvolvida com foco em arquitetura
 ![ezgif-681a663d751e0b18](https://github.com/user-attachments/assets/f36c54d8-f53d-464b-a0fc-faecc51aa514)
 
 
-#### Operações de CRUD e Busca
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=7LMaUXeY_jk" target="_blank">
-    <img src="https://img.youtube.com/vi/7LMaUXeY_jk/maxresdefault.jpg" alt="Demonstração do Sistema" width="100%">
-  </a>
-  <br>
-  <sub>Clique acima para assistir à demonstração</sub>
-</p>
 
 
 ### Funcionalidades Implementadas
